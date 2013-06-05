@@ -11,17 +11,19 @@ class SupervisorClient
 
 
 	/**
-	 * @param string		$supervisorUsername
-	 * @param string		$supervisorPassword
-	 * @param null|mixed	$logger
+	 * @param string     $username
+	 * @param string     $password
+	 * @param string     $hostname
+	 * @param int        $port
+	 * @param null|mixed $logger
 	 */
-	public function __construct($supervisorUsername, $supervisorPassword, $logger = null)
+	public function __construct($username, $password, $hostname = '127.0.0.1', $port = 9001, $logger = null)
 	{
 		$this->_logger = $logger;
 
 		// Connect to Supervsior XMLRPC server
 		// MUST add '/RPC2' to URI!!!
-		$xmlRpcClient = new Client("http://$supervisorUsername:$supervisorPassword@127.0.0.1:9001/RPC2");
+		$xmlRpcClient = new Client("http://$username:$password@$hostname:$port/RPC2");
 		$xmlRpcClient->setSkipSystemLookup(true);
 
 		$this->_service = $xmlRpcClient->getProxy();
