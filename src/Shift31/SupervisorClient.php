@@ -3,6 +3,9 @@
 namespace Shift31;
 
 use Zend\XmlRpc\Client;
+use Zend\XmlRpc\Client\Exception\HttpException;
+use Zend\XmlRpc\Client\Exception\FaultException;
+
 
 class SupervisorClient
 {
@@ -38,6 +41,12 @@ class SupervisorClient
 		try {
 			$state = $this->_service->supervisor->getState();
 			$supervisorState = $state['statename'];
+		} catch (HttpException $e) {
+			$this->_log('crit', "HttpException: " . $e->getCode() . " - " . $e->getMessage());
+			$this->_log('debug', "HttpException Stack Trace: " . $e->getTraceAsString());
+		} catch (FaultException $e) {
+			$this->_log('crit', "FaultException: " . $e->getCode() . " - " . $e->getMessage());
+			$this->_log('debug', "FaultException Stack Trace: " . $e->getTraceAsString());
 		} catch (\Exception $e) {
 			$this->_log('crit', "Exception: " . $e->getCode() . " - " . $e->getMessage());
 			$this->_log('debug', "Exception Stack Trace: " . $e->getTraceAsString());
@@ -53,6 +62,12 @@ class SupervisorClient
 
 		try {
 			$allProcessInfo = $this->_service->supervisor->getAllProcessInfo();
+		} catch (HttpException $e) {
+			$this->_log('crit', "HttpException: " . $e->getCode() . " - " . $e->getMessage());
+			$this->_log('debug', "HttpException Stack Trace: " . $e->getTraceAsString());
+		} catch (FaultException $e) {
+			$this->_log('crit', "FaultException: " . $e->getCode() . " - " . $e->getMessage());
+			$this->_log('debug', "FaultException Stack Trace: " . $e->getTraceAsString());
 		} catch (\Exception $e) {
 			$this->_log('crit', "Exception: " . $e->getCode() . " - " . $e->getMessage());
 			$this->_log('debug', "Exception Stack Trace: " . $e->getTraceAsString());
@@ -75,6 +90,12 @@ class SupervisorClient
 			foreach ($allProcessInfo as $process) {
 				$processes[$process['pid']] = $process;
 			}
+		} catch (HttpException $e) {
+			$this->_log('crit', "HttpException: " . $e->getCode() . " - " . $e->getMessage());
+			$this->_log('debug', "HttpException Stack Trace: " . $e->getTraceAsString());
+		} catch (FaultException $e) {
+			$this->_log('crit', "FaultException: " . $e->getCode() . " - " . $e->getMessage());
+			$this->_log('debug', "FaultException Stack Trace: " . $e->getTraceAsString());
 		} catch (\Exception $e) {
 			$this->_log('crit', "Exception: " . $e->getCode() . " - " . $e->getMessage());
 			$this->_log('debug', "Exception Stack Trace: " . $e->getTraceAsString());
@@ -95,6 +116,12 @@ class SupervisorClient
 
 		try {
 			$processInfo = $this->_service->supervisor->getProcessInfo($name);
+		} catch (HttpException $e) {
+			$this->_log('crit', "HttpException: " . $e->getCode() . " - " . $e->getMessage());
+			$this->_log('debug', "HttpException Stack Trace: " . $e->getTraceAsString());
+		} catch (FaultException $e) {
+			$this->_log('crit', "FaultException: " . $e->getCode() . " - " . $e->getMessage());
+			$this->_log('debug', "FaultException Stack Trace: " . $e->getTraceAsString());
 		} catch (\Exception $e) {
 			$this->_log('crit', "Exception: " . $e->getCode() . " - " . $e->getMessage());
 			$this->_log('debug', "Exception Stack Trace: " . $e->getTraceAsString());
@@ -116,6 +143,12 @@ class SupervisorClient
 		try {
 			$processInfo = $this->_service->supervisor->getProcessInfo($name);
 			$processState = $processInfo['statename'];
+		} catch (HttpException $e) {
+			$this->_log('crit', "HttpException: " . $e->getCode() . " - " . $e->getMessage());
+			$this->_log('debug', "HttpException Stack Trace: " . $e->getTraceAsString());
+		} catch (FaultException $e) {
+			$this->_log('crit', "FaultException: " . $e->getCode() . " - " . $e->getMessage());
+			$this->_log('debug', "FaultException Stack Trace: " . $e->getTraceAsString());
 		} catch (\Exception $e) {
 			$this->_log('crit', "Exception: " . $e->getCode() . " - " . $e->getMessage());
 			$this->_log('debug', "Exception Stack Trace: " . $e->getTraceAsString());
@@ -138,6 +171,12 @@ class SupervisorClient
 
 		try {
 			$result = $this->_service->supervisor->startProcess($name, $wait);
+		} catch (HttpException $e) {
+			$this->_log('crit', "HttpException: " . $e->getCode() . " - " . $e->getMessage());
+			$this->_log('debug', "HttpException Stack Trace: " . $e->getTraceAsString());
+		} catch (FaultException $e) {
+			$this->_log('crit', "FaultException: " . $e->getCode() . " - " . $e->getMessage());
+			$this->_log('debug', "FaultException Stack Trace: " . $e->getTraceAsString());
 		} catch (\Exception $e) {
 			$this->_log('crit', "Exception: " . $e->getCode() . " - " . $e->getMessage());
 			$this->_log('debug', "Exception Stack Trace: " . $e->getTraceAsString());
@@ -165,6 +204,12 @@ class SupervisorClient
 
 		try {
 			$result = $this->_service->supervisor->stopProcess($name);
+		} catch (HttpException $e) {
+			$this->_log('crit', "HttpException: " . $e->getCode() . " - " . $e->getMessage());
+			$this->_log('debug', "HttpException Stack Trace: " . $e->getTraceAsString());
+		} catch (FaultException $e) {
+			$this->_log('crit', "FaultException: " . $e->getCode() . " - " . $e->getMessage());
+			$this->_log('debug', "FaultException Stack Trace: " . $e->getTraceAsString());
 		} catch (\Exception $e) {
 			$this->_log('crit', "Exception: " . $e->getCode() . " - " . $e->getMessage());
 			$this->_log('debug', "Exception Stack Trace: " . $e->getTraceAsString());
@@ -189,19 +234,36 @@ class SupervisorClient
 	public function startProcessGroup($name, $wait = true)
 	{
 
+		$groupResult = null;
 		$result = false;
 
 		try {
-			$result = $this->_service->supervisor->startProcessGroup($name, $wait);
+			$groupResult = $this->_service->supervisor->startProcessGroup($name, $wait);
+		} catch (HttpException $e) {
+			$this->_log('crit', "HttpException: " . $e->getCode() . " - " . $e->getMessage());
+			$this->_log('debug', "HttpException Stack Trace: " . $e->getTraceAsString());
+		} catch (FaultException $e) {
+			$this->_log('crit', "FaultException: " . $e->getCode() . " - " . $e->getMessage());
+			$this->_log('debug', "FaultException Stack Trace: " . $e->getTraceAsString());
 		} catch (\Exception $e) {
 			$this->_log('crit', "Exception: " . $e->getCode() . " - " . $e->getMessage());
 			$this->_log('debug', "Exception Stack Trace: " . $e->getTraceAsString());
 		}
 
-		if ($result === true) {
-			$this->_log('notice', "Started process group '$name'");
+		if (is_array($groupResult)) {
+
+			foreach ($groupResult as $workerStatus) {
+				if ($workerStatus['description'] == 'OK') {
+					$result = true;
+					$this->_log('notice', "Started process '{$workerStatus['group']}:{$workerStatus['name']}'");
+				} else {
+					$result = false;
+					$this->_log('notice', "Failed to started process '{$workerStatus['group']}:{$workerStatus['name']}'");
+					break; // ignore other results if one failed
+				}
+			}
 		} else {
-			$this->_log('err', "Failed to start process '$name'");
+			$this->_log('err', "Failed to start process group '$name'");
 		}
 
 		return $result;
@@ -214,7 +276,9 @@ class SupervisorClient
 	 */
 	protected function _log($priority, $message)
 	{
-		if ($this->_logger != null) {
+		if ($this->_logger == 'cli') {
+			echo "[$priority] - $message" . PHP_EOL;
+		} elseif ($this->_logger != null) {
 			$class = str_replace(__NAMESPACE__ . "\\", '', get_called_class());
 			$this->_logger->$priority("[$class] - $message");
 		}
