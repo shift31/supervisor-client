@@ -137,7 +137,7 @@ class SupervisorClient
 		$result = false;
 
 		try {
-			$result = (bool)$this->_service->supervisor->startProcess($name, $wait);
+			$result = $this->_service->supervisor->startProcess($name, $wait);
 		} catch (\Exception $e) {
 			$this->_log('crit', "Exception: " . $e->getCode() . " - " . $e->getMessage());
 			$this->_log('debug', "Exception Stack Trace: " . $e->getTraceAsString());
@@ -164,7 +164,7 @@ class SupervisorClient
 		$result = false;
 
 		try {
-			$result = (bool)$this->_service->supervisor->stopProcess($name);
+			$result = $this->_service->supervisor->stopProcess($name);
 		} catch (\Exception $e) {
 			$this->_log('crit', "Exception: " . $e->getCode() . " - " . $e->getMessage());
 			$this->_log('debug', "Exception Stack Trace: " . $e->getTraceAsString());
@@ -192,7 +192,7 @@ class SupervisorClient
 		$result = false;
 
 		try {
-			$result = (bool)$this->_service->supervisor->startProcessGroup($name, $wait);
+			$result = $this->_service->supervisor->startProcessGroup($name, $wait);
 		} catch (\Exception $e) {
 			$this->_log('crit', "Exception: " . $e->getCode() . " - " . $e->getMessage());
 			$this->_log('debug', "Exception Stack Trace: " . $e->getTraceAsString());
